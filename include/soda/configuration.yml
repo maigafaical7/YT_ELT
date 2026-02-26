@@ -5,4 +5,12 @@ data_source my_datasource_name:
   username: ${ELT_DATABASE_USERNAME}
   password: ${ELT_DATABASE_PASSWORD}
   database: ${ELT_DATABASE_NAME}
-  schema: public
+  # schema: ${SCHEMA}
+ 
+
+
+
+
+
+
+   
