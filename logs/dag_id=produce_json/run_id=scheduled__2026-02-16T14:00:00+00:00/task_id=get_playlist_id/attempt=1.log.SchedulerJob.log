@@ -1,0 +1,1 @@
+[2026-02-17T17:31:44.982+0000] {scheduler_job_runner.py:769} ERROR - Executor reports task instance <TaskInstance: produce_json.get_playlist_id scheduled__2026-02-16T14:00:00+00:00 [queued]> finished (failed) although the task says it's queued. (Info: None) Was the task killed externally?

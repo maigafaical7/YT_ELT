@@ -1,0 +1,63 @@
+[2026-02-23T22:18:19.054+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-02-23T22:18:19.196+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: update_db.staging_table scheduled__2026-02-22T15:00:00+00:00 [queued]>
+[2026-02-23T22:18:19.263+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: update_db.staging_table scheduled__2026-02-22T15:00:00+00:00 [queued]>
+[2026-02-23T22:18:19.266+0000] {taskinstance.py:2306} INFO - Starting attempt 3 of 3
+[2026-02-23T22:18:19.348+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): staging_table> on 2026-02-22 15:00:00+00:00
+[2026-02-23T22:18:19.386+0000] {warnings.py:112} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=2999) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-02-23T22:18:19.392+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'update_db', 'staging_table', 'scheduled__2026-02-22T15:00:00+00:00', '--job-id', '249', '--raw', '--subdir', 'DAGS_FOLDER/main.py', '--cfg-path', '/tmp/tmp5fzfq7zg']
+[2026-02-23T22:18:19.429+0000] {standard_task_runner.py:63} INFO - Started process 3007 to run task
+[2026-02-23T22:18:19.431+0000] {standard_task_runner.py:91} INFO - Job 249: Subtask staging_table
+[2026-02-23T22:18:19.840+0000] {task_command.py:426} INFO - Running <TaskInstance: update_db.staging_table scheduled__2026-02-22T15:00:00+00:00 [running]> on host 74dced0ada0c
+[2026-02-23T22:18:20.222+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='data@engineers.com' AIRFLOW_CTX_DAG_OWNER='dataengineers' AIRFLOW_CTX_DAG_ID='update_db' AIRFLOW_CTX_TASK_ID='staging_table' AIRFLOW_CTX_EXECUTION_DATE='2026-02-22T15:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-02-22T15:00:00+00:00'
+[2026-02-23T22:18:20.233+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-02-23T22:18:20.288+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-23T22:18:20.307+0000] {dwh.py:52} ERROR - An error occured during the update of staging table: connection to server at "postgres" (172.18.0.3), port 5432 failed: FATAL:  password authentication failed for user "elt_user"
+
+[2026-02-23T22:18:20.311+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-02-23T22:18:20.316+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/decorators/base.py", line 265, in execute
+    return_value = super().execute(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/datawarehouse/dwh.py", line 53, in staging_table
+    raise e
+  File "/opt/airflow/dags/datawarehouse/dwh.py", line 22, in staging_table
+    conn, cur = get_conn_cursor()
+                ^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/datawarehouse/data_utils.py", line 12, in get_conn_cursor
+    conn = hook.get_conn()
+           ^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/postgres/hooks/postgres.py", line 175, in get_conn
+    self.conn = psycopg2.connect(**conn_args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "postgres" (172.18.0.3), port 5432 failed: FATAL:  password authentication failed for user "elt_user"
+
+[2026-02-23T22:18:20.351+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=update_db, task_id=staging_table, run_id=scheduled__2026-02-22T15:00:00+00:00, execution_date=20260222T150000, start_date=20260223T221819, end_date=20260223T221820
+[2026-02-23T22:18:20.383+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 249 for task staging_table (connection to server at "postgres" (172.18.0.3), port 5432 failed: FATAL:  password authentication failed for user "elt_user"
+; 3007)
+[2026-02-23T22:18:20.405+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-02-23T22:18:20.450+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-02-23T22:18:20.465+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

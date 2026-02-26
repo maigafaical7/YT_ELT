@@ -1,0 +1,53 @@
+def test_api_key(api_key):
+    assert api_key == "MOCK_KEY1234"
+
+def test_channel_handle(channel_handle):
+    assert channel_handle == "MRCHEESE"
+
+import pytest
+
+def test_postgres_conn(mock_postgres_conn_vars):
+    conn = mock_postgres_conn_vars
+    assert conn.login == "mock_username"
+    assert conn.password == "mock_password"
+    assert conn.host == "mock_host"
+    assert conn.port == 1234
+    assert conn.schema == "mock_db_name"
+
+import pytest
+
+def test_dags_integrity(dagbag):
+    # 1.
+    assert dagbag.import_errors == {}, f"Import errors found: {dagbag.import_errors}"
+    print("===========")
+    print(dagbag.import_errors)
+
+    # 2.
+    expected_dag_ids = ["produce_json", "update_db", "data_quality_check"]
+    loaded_dag_ids = [dag_id for dag_id in dagbag.dags.keys() if dag_id != "test_dag"]
+    print("===========")
+    print(loaded_dag_ids)
+
+    for dag_id in expected_dag_ids:
+        assert dag_id in loaded_dag_ids, f"DAG {dag_id} is missing."
+
+    # 3.
+    assert len(loaded_dag_ids) == 3
+    print("===========")
+    print(len(loaded_dag_ids))
+
+    # 4.
+    expected_task_counts = {
+        "produce_json": 5,
+        "update_db": 3,
+        "data_quality_check": 2,
+    }
+    print("===========")
+    for dag_id in loaded_dag_ids:
+        dag = dagbag.dags[dag_id]
+        expected_count = expected_task_counts[dag_id]
+        actual_count = len(dag.tasks)
+        assert (
+            expected_count == actual_count
+        ), f"DAG {dag_id} has {actual_count} tasks, expected {expected_count}."
+        print(dag_id, len(dag.tasks))

@@ -1,0 +1,50 @@
+[2026-02-16T02:16:36.828+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-02-16T02:16:36.860+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: produce_json.get_playlist_id manual__2026-02-16T02:10:43.657181+00:00 [queued]>
+[2026-02-16T02:16:36.870+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: produce_json.get_playlist_id manual__2026-02-16T02:10:43.657181+00:00 [queued]>
+[2026-02-16T02:16:36.871+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 3
+[2026-02-16T02:16:36.890+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): get_playlist_id> on 2026-02-16 02:10:43.657181+00:00
+[2026-02-16T02:16:36.897+0000] {warnings.py:112} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=65) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-02-16T02:16:36.899+0000] {standard_task_runner.py:63} INFO - Started process 66 to run task
+[2026-02-16T02:16:36.899+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'produce_json', 'get_playlist_id', 'manual__2026-02-16T02:10:43.657181+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/main.py', '--cfg-path', '/tmp/tmpkg30jkko']
+[2026-02-16T02:16:36.901+0000] {standard_task_runner.py:91} INFO - Job 11: Subtask get_playlist_id
+[2026-02-16T02:16:36.977+0000] {task_command.py:426} INFO - Running <TaskInstance: produce_json.get_playlist_id manual__2026-02-16T02:10:43.657181+00:00 [running]> on host 5049ca20db5e
+[2026-02-16T02:16:37.088+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='data@engineers.com' AIRFLOW_CTX_DAG_OWNER='dataengineers' AIRFLOW_CTX_DAG_ID='produce_json' AIRFLOW_CTX_TASK_ID='get_playlist_id' AIRFLOW_CTX_EXECUTION_DATE='2026-02-16T02:10:43.657181+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-16T02:10:43.657181+00:00'
+[2026-02-16T02:16:37.091+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-02-16T02:16:37.488+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-02-16T02:16:37.489+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/decorators/base.py", line 265, in execute
+    return_value = super().execute(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/api/video_stats.py", line 41, in get_playlist_id
+    raise e
+  File "/opt/airflow/dags/api/video_stats.py", line 26, in get_playlist_id
+    response.raise_for_status()
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://youtube.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=@yourchannel&key=***
+[2026-02-16T02:16:37.507+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=produce_json, task_id=get_playlist_id, run_id=manual__2026-02-16T02:10:43.657181+00:00, execution_date=20260216T021043, start_date=20260216T021636, end_date=20260216T021637
+[2026-02-16T02:16:37.523+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 11 for task get_playlist_id (400 Client Error: Bad Request for url: https://youtube.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=@yourchannel&key=***; 66)
+[2026-02-16T02:16:37.557+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-02-16T02:16:37.586+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-02-16T02:16:37.588+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

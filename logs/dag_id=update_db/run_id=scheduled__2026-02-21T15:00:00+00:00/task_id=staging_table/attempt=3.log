@@ -1,0 +1,249 @@
+[2026-02-22T22:50:54.149+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-02-22T22:50:54.198+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: update_db.staging_table scheduled__2026-02-21T15:00:00+00:00 [queued]>
+[2026-02-22T22:50:54.213+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: update_db.staging_table scheduled__2026-02-21T15:00:00+00:00 [queued]>
+[2026-02-22T22:50:54.214+0000] {taskinstance.py:2306} INFO - Starting attempt 3 of 3
+[2026-02-22T22:50:54.244+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): staging_table> on 2026-02-21 15:00:00+00:00
+[2026-02-22T22:50:54.253+0000] {warnings.py:112} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=64) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-02-22T22:50:54.255+0000] {standard_task_runner.py:63} INFO - Started process 65 to run task
+[2026-02-22T22:50:54.255+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'update_db', 'staging_table', 'scheduled__2026-02-21T15:00:00+00:00', '--job-id', '222', '--raw', '--subdir', 'DAGS_FOLDER/main.py', '--cfg-path', '/tmp/tmpoom4nc02']
+[2026-02-22T22:50:54.256+0000] {standard_task_runner.py:91} INFO - Job 222: Subtask staging_table
+[2026-02-22T22:50:54.371+0000] {task_command.py:426} INFO - Running <TaskInstance: update_db.staging_table scheduled__2026-02-21T15:00:00+00:00 [running]> on host 74dced0ada0c
+[2026-02-22T22:50:54.542+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='data@engineers.com' AIRFLOW_CTX_DAG_OWNER='dataengineers' AIRFLOW_CTX_DAG_ID='update_db' AIRFLOW_CTX_TASK_ID='staging_table' AIRFLOW_CTX_EXECUTION_DATE='2026-02-21T15:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-02-21T15:00:00+00:00'
+[2026-02-22T22:50:54.545+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-02-22T22:50:54.572+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-22T22:50:54.582+0000] {data_utils.py:13} INFO - Database connection established
+[2026-02-22T22:50:54.592+0000] {data_loading.py:18} INFO - Loading data from /opt/airflow/data/YT_data_2026-02-22.json
+[2026-02-22T22:50:54.613+0000] {data_loading.py:23} INFO - Loaded 947 records from JSON
+[2026-02-22T22:50:54.616+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-22T22:50:54.626+0000] {data_utils.py:13} INFO - Database connection established
+[2026-02-22T22:50:54.629+0000] {data_utils.py:27} INFO - Schema staging created or already exists
+[2026-02-22T22:50:54.631+0000] {data_utils.py:20} INFO - Database connection closed
+[2026-02-22T22:50:54.636+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-22T22:50:54.645+0000] {data_utils.py:13} INFO - Database connection established
+[2026-02-22T22:50:54.648+0000] {data_utils.py:62} INFO - Table staging.yt_api created or already exists
+[2026-02-22T22:50:54.649+0000] {data_utils.py:20} INFO - Database connection closed
+[2026-02-22T22:50:54.654+0000] {data_utils.py:70} INFO - Retrieved 0 video IDs from staging
+[2026-02-22T22:50:54.656+0000] {data_modification.py:23} ERROR - Error inserting row with video_id: KaUuPNYHFNg - column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+
+[2026-02-22T22:50:54.657+0000] {dwh.py:51} ERROR - An error occured during the update of staging table: column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+
+[2026-02-22T22:50:54.658+0000] {data_utils.py:20} INFO - Database connection closed
+[2026-02-22T22:50:54.660+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-02-22T22:50:54.661+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/decorators/base.py", line 265, in execute
+    return_value = super().execute(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/datawarehouse/dwh.py", line 52, in staging_table
+    raise e
+  File "/opt/airflow/dags/datawarehouse/dwh.py", line 33, in staging_table
+    insert_rows(cur, conn, schema, row)
+  File "/opt/airflow/dags/datawarehouse/data_modification.py", line 24, in insert_rows
+    raise e
+  File "/opt/airflow/dags/datawarehouse/data_modification.py", line 9, in insert_rows
+    cur.execute(
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/extras.py", line 236, in execute
+    return super().execute(query, vars)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+
+[2026-02-22T22:50:54.702+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=update_db, task_id=staging_table, run_id=scheduled__2026-02-21T15:00:00+00:00, execution_date=20260221T150000, start_date=20260222T225054, end_date=20260222T225054
+[2026-02-22T22:50:54.756+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 222 for task staging_table (column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+; 65)
+[2026-02-22T22:50:54.793+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-02-22T22:50:54.847+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-02-22T22:50:54.857+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-02-22T23:03:01.278+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-02-22T23:03:01.321+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: update_db.staging_table scheduled__2026-02-21T15:00:00+00:00 [queued]>
+[2026-02-22T23:03:01.335+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: update_db.staging_table scheduled__2026-02-21T15:00:00+00:00 [queued]>
+[2026-02-22T23:03:01.336+0000] {taskinstance.py:2306} INFO - Starting attempt 3 of 3
+[2026-02-22T23:03:01.361+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): staging_table> on 2026-02-21 15:00:00+00:00
+[2026-02-22T23:03:01.370+0000] {warnings.py:112} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=221) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-02-22T23:03:01.373+0000] {standard_task_runner.py:63} INFO - Started process 222 to run task
+[2026-02-22T23:03:01.373+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'update_db', 'staging_table', 'scheduled__2026-02-21T15:00:00+00:00', '--job-id', '229', '--raw', '--subdir', 'DAGS_FOLDER/main.py', '--cfg-path', '/tmp/tmpz61fqfub']
+[2026-02-22T23:03:01.375+0000] {standard_task_runner.py:91} INFO - Job 229: Subtask staging_table
+[2026-02-22T23:03:01.506+0000] {task_command.py:426} INFO - Running <TaskInstance: update_db.staging_table scheduled__2026-02-21T15:00:00+00:00 [running]> on host 74dced0ada0c
+[2026-02-22T23:03:01.658+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='data@engineers.com' AIRFLOW_CTX_DAG_OWNER='dataengineers' AIRFLOW_CTX_DAG_ID='update_db' AIRFLOW_CTX_TASK_ID='staging_table' AIRFLOW_CTX_EXECUTION_DATE='2026-02-21T15:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-02-21T15:00:00+00:00'
+[2026-02-22T23:03:01.661+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-02-22T23:03:01.675+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-22T23:03:01.682+0000] {data_utils.py:13} INFO - Database connection established
+[2026-02-22T23:03:01.687+0000] {data_loading.py:18} INFO - Loading data from /opt/airflow/data/YT_data_2026-02-22.json
+[2026-02-22T23:03:01.698+0000] {data_loading.py:23} INFO - Loaded 947 records from JSON
+[2026-02-22T23:03:01.701+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-22T23:03:01.708+0000] {data_utils.py:13} INFO - Database connection established
+[2026-02-22T23:03:01.710+0000] {data_utils.py:27} INFO - Schema staging created or already exists
+[2026-02-22T23:03:01.711+0000] {data_utils.py:20} INFO - Database connection closed
+[2026-02-22T23:03:01.713+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-22T23:03:01.718+0000] {data_utils.py:13} INFO - Database connection established
+[2026-02-22T23:03:01.720+0000] {data_utils.py:62} INFO - Table staging.yt_api created or already exists
+[2026-02-22T23:03:01.721+0000] {data_utils.py:20} INFO - Database connection closed
+[2026-02-22T23:03:01.723+0000] {data_utils.py:70} INFO - Retrieved 0 video IDs from staging
+[2026-02-22T23:03:01.725+0000] {data_modification.py:23} ERROR - Error inserting row with video_id: KaUuPNYHFNg - column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+
+[2026-02-22T23:03:01.726+0000] {dwh.py:51} ERROR - An error occured during the update of staging table: column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+
+[2026-02-22T23:03:01.726+0000] {data_utils.py:20} INFO - Database connection closed
+[2026-02-22T23:03:01.727+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-02-22T23:03:01.728+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/decorators/base.py", line 265, in execute
+    return_value = super().execute(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/datawarehouse/dwh.py", line 52, in staging_table
+    raise e
+  File "/opt/airflow/dags/datawarehouse/dwh.py", line 33, in staging_table
+    insert_rows(cur, conn, schema, row)
+  File "/opt/airflow/dags/datawarehouse/data_modification.py", line 24, in insert_rows
+    raise e
+  File "/opt/airflow/dags/datawarehouse/data_modification.py", line 9, in insert_rows
+    cur.execute(
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/extras.py", line 236, in execute
+    return super().execute(query, vars)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+
+[2026-02-22T23:03:01.752+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=update_db, task_id=staging_table, run_id=scheduled__2026-02-21T15:00:00+00:00, execution_date=20260221T150000, start_date=20260222T230301, end_date=20260222T230301
+[2026-02-22T23:03:01.767+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 229 for task staging_table (column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+; 222)
+[2026-02-22T23:03:01.794+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-02-22T23:03:01.826+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-02-22T23:03:01.830+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-02-22T23:36:49.481+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-02-22T23:36:49.524+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: update_db.staging_table scheduled__2026-02-21T15:00:00+00:00 [queued]>
+[2026-02-22T23:36:49.538+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: update_db.staging_table scheduled__2026-02-21T15:00:00+00:00 [queued]>
+[2026-02-22T23:36:49.539+0000] {taskinstance.py:2306} INFO - Starting attempt 3 of 3
+[2026-02-22T23:36:49.559+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): staging_table> on 2026-02-21 15:00:00+00:00
+[2026-02-22T23:36:49.568+0000] {warnings.py:112} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=666) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-02-22T23:36:49.570+0000] {standard_task_runner.py:63} INFO - Started process 667 to run task
+[2026-02-22T23:36:49.570+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'update_db', 'staging_table', 'scheduled__2026-02-21T15:00:00+00:00', '--job-id', '238', '--raw', '--subdir', 'DAGS_FOLDER/main.py', '--cfg-path', '/tmp/tmpds4042h8']
+[2026-02-22T23:36:49.572+0000] {standard_task_runner.py:91} INFO - Job 238: Subtask staging_table
+[2026-02-22T23:36:49.690+0000] {task_command.py:426} INFO - Running <TaskInstance: update_db.staging_table scheduled__2026-02-21T15:00:00+00:00 [running]> on host 74dced0ada0c
+[2026-02-22T23:36:49.832+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='data@engineers.com' AIRFLOW_CTX_DAG_OWNER='dataengineers' AIRFLOW_CTX_DAG_ID='update_db' AIRFLOW_CTX_TASK_ID='staging_table' AIRFLOW_CTX_EXECUTION_DATE='2026-02-21T15:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-02-21T15:00:00+00:00'
+[2026-02-22T23:36:49.834+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-02-22T23:36:49.853+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-22T23:36:49.861+0000] {data_utils.py:13} INFO - Database connection established
+[2026-02-22T23:36:49.869+0000] {data_loading.py:18} INFO - Loading data from /opt/airflow/data/YT_data_2026-02-22.json
+[2026-02-22T23:36:49.881+0000] {data_loading.py:23} INFO - Loaded 947 records from JSON
+[2026-02-22T23:36:49.884+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-22T23:36:49.892+0000] {data_utils.py:13} INFO - Database connection established
+[2026-02-22T23:36:49.894+0000] {data_utils.py:27} INFO - Schema staging created or already exists
+[2026-02-22T23:36:49.896+0000] {data_utils.py:20} INFO - Database connection closed
+[2026-02-22T23:36:49.898+0000] {base.py:84} INFO - Using connection ID 'postgres_db_yt_elt' for task execution.
+[2026-02-22T23:36:49.906+0000] {data_utils.py:13} INFO - Database connection established
+[2026-02-22T23:36:49.921+0000] {data_utils.py:62} INFO - Table staging.yt_api created or already exists
+[2026-02-22T23:36:49.923+0000] {data_utils.py:20} INFO - Database connection closed
+[2026-02-22T23:36:49.926+0000] {data_utils.py:70} INFO - Retrieved 0 video IDs from staging
+[2026-02-22T23:36:49.928+0000] {data_modification.py:23} ERROR - Error inserting row with video_id: KaUuPNYHFNg - column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+
+[2026-02-22T23:36:49.928+0000] {dwh.py:51} ERROR - An error occured during the update of staging table: column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+
+[2026-02-22T23:36:49.929+0000] {data_utils.py:20} INFO - Database connection closed
+[2026-02-22T23:36:49.930+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-02-22T23:36:49.931+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/decorators/base.py", line 265, in execute
+    return_value = super().execute(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/datawarehouse/dwh.py", line 52, in staging_table
+    raise e
+  File "/opt/airflow/dags/datawarehouse/dwh.py", line 33, in staging_table
+    insert_rows(cur, conn, schema, row)
+  File "/opt/airflow/dags/datawarehouse/data_modification.py", line 24, in insert_rows
+    raise e
+  File "/opt/airflow/dags/datawarehouse/data_modification.py", line 9, in insert_rows
+    cur.execute(
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/extras.py", line 236, in execute
+    return super().execute(query, vars)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+
+[2026-02-22T23:36:49.962+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=update_db, task_id=staging_table, run_id=scheduled__2026-02-21T15:00:00+00:00, execution_date=20260221T150000, start_date=20260222T233649, end_date=20260222T233649
+[2026-02-22T23:36:49.988+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 238 for task staging_table (column "title" of relation "yt_api" does not exist
+LINE 1: INSERT INTO staging.yt_api (video_id, title, publishedat, du...
+                                              ^
+; 667)
+[2026-02-22T23:36:50.030+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-02-22T23:36:50.061+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-02-22T23:36:50.069+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
