@@ -1,0 +1,32 @@
+[2026-02-26T14:00:39.762+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-02-26T14:00:39.785+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_quality_check.soda_test_core manual__2026-02-26T14:00:35.330746+00:00 [queued]>
+[2026-02-26T14:00:39.795+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_quality_check.soda_test_core manual__2026-02-26T14:00:35.330746+00:00 [queued]>
+[2026-02-26T14:00:39.795+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2026-02-26T14:00:39.808+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): soda_test_core> on 2026-02-26 14:00:35.330746+00:00
+[2026-02-26T14:00:39.816+0000] {warnings.py:112} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=3536) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-02-26T14:00:39.818+0000] {standard_task_runner.py:63} INFO - Started process 3537 to run task
+[2026-02-26T14:00:39.818+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'data_quality_check', 'soda_test_core', 'manual__2026-02-26T14:00:35.330746+00:00', '--job-id', '318', '--raw', '--subdir', 'DAGS_FOLDER/main.py', '--cfg-path', '/tmp/tmp690tkrgj']
+[2026-02-26T14:00:39.819+0000] {standard_task_runner.py:91} INFO - Job 318: Subtask soda_test_core
+[2026-02-26T14:00:39.888+0000] {task_command.py:426} INFO - Running <TaskInstance: data_quality_check.soda_test_core manual__2026-02-26T14:00:35.330746+00:00 [running]> on host 41da2d4dad5d
+[2026-02-26T14:00:39.977+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='data@engineers.com' AIRFLOW_CTX_DAG_OWNER='dataengineers' AIRFLOW_CTX_DAG_ID='data_quality_check' AIRFLOW_CTX_TASK_ID='soda_test_core' AIRFLOW_CTX_EXECUTION_DATE='2026-02-26T14:00:35.330746+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-26T14:00:35.330746+00:00'
+[2026-02-26T14:00:39.978+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-02-26T14:00:39.979+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-02-26T14:00:39.980+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'soda scan -d my_datasource_name -c /opt/airflow/include/soda/configuration.yml /opt/airflow/include/soda/checks.yml']
+[2026-02-26T14:00:39.990+0000] {subprocess.py:86} INFO - Output:
+[2026-02-26T14:00:41.013+0000] {subprocess.py:93} INFO - [14:00:41] Soda Core 3.3.14
+[2026-02-26T14:00:41.117+0000] {subprocess.py:93} INFO - [14:00:41] Scan summary:
+[2026-02-26T14:00:41.118+0000] {subprocess.py:93} INFO - [14:00:41] 4/4 checks PASSED:
+[2026-02-26T14:00:41.119+0000] {subprocess.py:93} INFO - [14:00:41]     yt_api in my_datasource_name
+[2026-02-26T14:00:41.119+0000] {subprocess.py:93} INFO - [14:00:41]       Check for likecount greater than viewcount [PASSED]
+[2026-02-26T14:00:41.120+0000] {subprocess.py:93} INFO - [14:00:41]       Check for commentcount greater than viewcount [PASSED]
+[2026-02-26T14:00:41.121+0000] {subprocess.py:93} INFO - [14:00:41]       missing_count(video_id) = 0 [PASSED]
+[2026-02-26T14:00:41.121+0000] {subprocess.py:93} INFO - [14:00:41]       duplicate_count(video_id) = 0 [PASSED]
+[2026-02-26T14:00:41.122+0000] {subprocess.py:93} INFO - [14:00:41] All is good. No failures. No warnings. No errors.
+[2026-02-26T14:00:41.653+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2026-02-26T14:00:41.654+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-02-26T14:00:41.677+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=data_quality_check, task_id=soda_test_core, run_id=manual__2026-02-26T14:00:35.330746+00:00, execution_date=20260226T140035, start_date=20260226T140039, end_date=20260226T140041
+[2026-02-26T14:00:41.729+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-02-26T14:00:41.746+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-02-26T14:00:41.748+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
